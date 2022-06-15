@@ -38,7 +38,8 @@ contract CafeMenu is Ownable {
         uint32 _defaultAmount
         ) public onlyOwner returns(bool success){
             //check that new material is unique   
-            for(uint i=0; i < materials.length; i++) {
+            uint materialsLen = materials.length;
+            for(uint i=0; i < materialsLen; i++) {
                 require(keccak256(abi.encodePacked(materials[i].name)) != keccak256(abi.encodePacked(_name)),
                 string(abi.encodePacked(_name,"already exists")));
             }
@@ -55,13 +56,14 @@ contract CafeMenu is Ownable {
             }
             
             //check that new product is unique
-            for(uint i=0; i < products.length; i++){
+            uint productsLen = products.length;
+            for(uint i=0; i < productsLen; i++){
                 require(keccak256(abi.encodePacked(products[i])) != keccak256(abi.encodePacked(_name)),
                 string(abi.encodePacked(_name,"already exists")));
             }
 
             products.push(_name);
-            uint productId = products.length -1;
+            uint productId = productsLen -1;
             for(uint i=0; i <_recipes.length; i++){
                 productToRecipes[productId].push(_recipes[i]);
             }
